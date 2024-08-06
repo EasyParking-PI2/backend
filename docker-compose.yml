@@ -1,0 +1,62 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: shared_network
+
+services:
+  authentication-service:
+    build: ./service-users
+    links:
+      - rethinkdb:rethinkdb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./service-users:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - rethinkdb
+
+  rethinkdb:
+    image: rethinkdb
+    ports:
+      - "8080:8080"
+      - "28015:28015"
+      - "29015:29015"
+    volumes:
+      - rethinkdb_data:/data
+
+  application-service:
+    build: ./application-service
+    links:
+      - mysql:mysql
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./application-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      mysql:
+        condition: service_healthy
+      authentication-service:
+        condition: service_started
+    
+  mysql:
+    image: mysql/mysql-server:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlPW
+      MYSQL_DATABASE: easy-parking
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test_pass
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+volumes:
+  rethinkdb_data:
+    driver: local
+  mysql-volume:
+    driver: local
