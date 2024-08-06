@@ -1,0 +1,6 @@
+[submodule "application-service"]
+	path = application-service
+	url = https://github.com/EasyParking-PI2/application-service.git
+[submodule "service-users"]
+	path = service-users
+	url = https://github.com/EasyParking-PI2/service-users.git
