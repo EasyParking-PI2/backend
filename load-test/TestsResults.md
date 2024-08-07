@@ -35,7 +35,7 @@
 ## Serviço - Inserir vaga
   * Endpoint: api/vagas
   * Tipo de requisição: POST
-  * Tipo de operação: Leitura
+  * Tipo de operação: Leitura e escrita
   * Arquivos envolvidos:
     - [index.ts](https://github.com/EasyParking-PI2/application-service/blob/main/src/index.ts)
     - [vaga.rout.ts](https://github.com/EasyParking-PI2/application-service/blob/main/src/routes/vaga.route.ts)
