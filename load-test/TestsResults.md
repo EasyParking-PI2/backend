@@ -17,12 +17,15 @@
   - [AuthenticationController.ts](https://github.com/EasyParking-PI2/service-users/blob/main/src/controllers/AuthenticationController.ts)
   - [user.model.ts](https://github.com/EasyParking-PI2/service-users/blob/main/src/models/user.model.ts)
   - [RethinkDBConnection.ts](https://github.com/EasyParking-PI2/service-users/blob/main/src/infra/RethinkDBConnection.ts)
-* Data de medição: 07/08/2024
+
 * Descrição das configurações:
     - 1 Container docker com o serviço da aplicação rodando;
     - 1 Container docker com o serviço de banco de dados rodando (Mysql);
     - 1 Container docker com o serviço de autenticação rodando;
     - 1 Container docker com o serviço de banco de dados de autenticação rodando (RethinkDB);
+
+  ## MEDIÇÃO 1
+* Data de medição: 07/08/2024
 * Testes de carga (SLA):
   ![Login summary](./assets/login-test-summary.png)
   ![Login graphics](./assets/login-test-graphics.png)
@@ -31,6 +34,13 @@
   - A taxa de requisições manteve seu crescimento estável durante todo o teste, atingindo 9.33 requisições por segundo;
   - A aplicação conseguiu atingir o limite de requisições simultâneas que foi configurado para o teste (20VUs);
 
+    ## MEDIÇÃO 2
+* Data de medição: 21/08/2024
+* Testes de carga (SLA):
+  ![Login summary](./assets/login-test-summary2.png)
+  ![Login graphics](./assets/login-test-graphics2.png)
+* Melhorias realizadas:
+  - Utilização de clusters para criar novas threads para melhorar a performance do sistema. Os testes foram executados com 4 threads no total, o que aumentou um pouco a performance. Arquivos modificados: index.ts e CustomExpress.ts
 
 ## Serviço - Inserir vaga
   * Endpoint: api/vagas
@@ -45,12 +55,15 @@
     - [DatabaseConnection.ts](https://github.com/EasyParking-PI2/application-service/blob/main/src/infra/DatabaseConnection.ts)
     - [authenticationMiddleware.ts](https://github.com/EasyParking-PI2/application-service/blob/main/src/middleware/authenticationMiddleware.ts)
     - [authenticationService.ts](https://github.com/EasyParking-PI2/application-service/blob/main/src/services/authentication.service.ts)
-  * Data de medição: 07/08/2024
+
   * Descrição das configurações:
     - 1 Container docker com o serviço da aplicação rodando;
     - 1 Container docker com o serviço de banco de dados rodando (Mysql);
     - 1 Container docker com o serviço de autenticação rodando;
     - 1 Container docker com o serviço de banco de dados de autenticação rodando (RethinkDB);
+
+    ## MEDIÇÃO 1
+  * Data de medição: 07/08/2024
   * Testes de carga (SLA):
     ![Create vaga summary](./assets/create-vaga-test-summary.png)
     ![Create vaga graphics](./assets/create-vaga-test-graphics.png)
@@ -59,3 +72,12 @@
     - A taxa de requisições por segundo manteve o crescimento estável durante todo o teste, atingindo o pico de 19 requisições por segundo;
     - A aplicação não atingiu o limite de requisições simultâneas estipulado pelo teste (20 VUs), atingindo 19 VUs;
     - O teste teve uma requisição com falha, que provavelmente ocorreu devido a repetição do número da vaga em duas requisições, pois foi definido no teste que essa variável iria assumir um valor aleatório para cada requisição. No entanto, existe uma chance pequena de que duas requisições enviem o mesmo valor, o que irá retornar um código de erro para a segunda requisição, pois a regra de negócio não permite que duas vagas possuam o mesmo número.  
+
+    ## MEDIÇÃO 2
+
+    * Data de medição: 07/08/2024
+    * Testes de carga (SLA):
+    ![Create vaga summary](./assets/create-vaga-test-summary2.png)
+    ![Create vaga graphics](./assets/create-vaga-test-graphics2.png)
+    * Melhorias realizadas:
+      - Utilização de clusters para criar novas threads para melhorar a performance do sistema. Os testes foram executados com 4 threads no total, o que aumentou bastante o tempo de resposta da aplicação. Arquivos modificados: index.ts e CustomExpress.ts

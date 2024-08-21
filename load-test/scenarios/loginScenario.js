@@ -9,6 +9,11 @@ export let PostLoginConcurrency = new Trend("post_login_concurrency");
 
 
 export let options = {
+  ext:{
+    loadimpact: {
+      projectID: 3710536
+    }
+  },
   stages: [
     { target: 10, duration: "30s" },
     { target: 20, duration: "30s" },
